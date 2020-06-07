@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="catbot">
+  <link
+    name="torso">
+    <inertial>
+      <origin
+        xyz="-0.0083533 0.0068737 -0.00026198"
+        rpy="0 0 0" />
+      <mass
+        value="8.3142" />
+      <inertia
+        ixx="0.12863"
+        ixy="7.3069E-19"
+        ixz="-6.3527E-19"
+        iyy="0.14942"
+        iyz="-1.9086E-18"
+        izz="0.034217" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/torso.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/torso.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="LF_top">
+    <inertial>
+      <origin
+        xyz="0.043443 0 0.031641"
+        rpy="0 0 0" />
+      <mass
+        value="0.74281" />
+      <inertia
+        ixx="0.00091157"
+        ixy="-4.3587E-20"
+        ixz="-0.00016303"
+        iyy="0.0015982"
+        iyz="1.0339E-19"
+        izz="0.0019492" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_top.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_top.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_0"
+    type="continuous">
+    <origin
+      xyz="0.041647 -0.19974 0.0068737"
+      rpy="1.5708 0 0" />
+    <parent
+      link="torso" />
+    <child
+      link="LF_top" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="LF_mid">
+    <inertial>
+      <origin
+        xyz="0.011868 -0.11868 -4.0246E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.42053" />
+      <inertia
+        ixx="0.0025177"
+        ixy="6.3871E-05"
+        ixz="1.7889E-18"
+        iyy="0.00023914"
+        iyz="-2.1684E-19"
+        izz="0.0023351" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_1"
+    type="continuous">
+    <origin
+      xyz="0.1 0 0.0375"
+      rpy="0.79172 0 0" />
+    <parent
+      link="LF_top" />
+    <child
+      link="LF_mid" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="LF_bot">
+    <inertial>
+      <origin
+        xyz="-0.0281323654405417 -0.118676345594585 -1.38777878078145E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914874" />
+      <inertia
+        ixx="0.00251771741245767"
+        ixy="6.38714488107791E-05"
+        ixz="1.43157697061471E-20"
+        iyy="0.000239137877978165"
+        iyz="-1.88380127469356E-18"
+        izz="0.0023350971851706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_bot.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LF_bot.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_2"
+    type="continuous">
+    <origin
+      xyz="0 -0.2 0"
+      rpy="-1.5941 0 3.1416" />
+    <parent
+      link="LF_mid" />
+    <child
+      link="LF_bot" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RF_top">
+    <inertial>
+      <origin
+        xyz="0.0434431624243415 -0.01 0.0316409159213933"
+        rpy="0 0 0" />
+      <mass
+        value="0.742809724509617" />
+      <inertia
+        ixx="0.000911568064346272"
+        ixy="1.6752244435703E-19"
+        ixz="-0.000163030997128549"
+        iyy="0.00159822809215748"
+        iyz="3.07637244182487E-20"
+        izz="0.00194921992793341" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_top.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_top.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_0"
+    type="continuous">
+    <origin
+      xyz="-0.058353 -0.19974 -0.0031263"
+      rpy="-1.5708 0 -3.1416" />
+    <parent
+      link="torso" />
+    <child
+      link="RF_top" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RF_mid">
+    <inertial>
+      <origin
+        xyz="0.0118676345594662 -0.118676345594519 6.94722057659192E-14"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914874" />
+      <inertia
+        ixx="0.00251771741245767"
+        ixy="6.3871448810783E-05"
+        ixz="4.01403446656845E-20"
+        iyy="0.000239137877978165"
+        iyz="-1.33492392487278E-18"
+        izz="0.0023350971851706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_1"
+    type="continuous">
+    <origin
+      xyz="0.1 -0.01 0.0375"
+      rpy="2.3499 0 0" />
+    <parent
+      link="RF_top" />
+    <child
+      link="RF_mid" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RF_bot">
+    <inertial>
+      <origin
+        xyz="-0.0281323654405531 -0.118676345594582 2.92821322744885E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914873" />
+      <inertia
+        ixx="0.00251771741245768"
+        ixy="6.38714488105677E-05"
+        ixz="-1.58293517182884E-17"
+        iyy="0.000239137877978152"
+        iyz="-5.48877349820787E-18"
+        izz="0.0023350971851706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_bot.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RF_bot.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_2"
+    type="continuous">
+    <origin
+      xyz="0 -0.2 0"
+      rpy="1.5941 0 3.1416" />
+    <parent
+      link="RF_mid" />
+    <child
+      link="RF_bot" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="LB_top">
+    <inertial>
+      <origin
+        xyz="0.0434431624241247 -0.0100001372498214 0.0316409159213933"
+        rpy="0 0 0" />
+      <mass
+        value="0.742809724509618" />
+      <inertia
+        ixx="0.000911568064353126"
+        ixy="2.16936247095985E-09"
+        ixz="-0.000163030997127735"
+        iyy="0.00159822809215063"
+        iyz="5.15063222596367E-10"
+        izz="0.00194921992793341" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_top.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_top.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_0"
+    type="continuous">
+    <origin
+      xyz="0.041647 0.20026 -0.0031263"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="torso" />
+    <child
+      link="LB_top" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="LB_mid">
+    <inertial>
+      <origin
+        xyz="0.011868693885371 -0.118676319452495 -2.68805545600159E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914874" />
+      <inertia
+        ixx="0.00251771713107495"
+        ixy="6.38764676846582E-05"
+        ixz="-4.13607547178146E-10"
+        iyy="0.000239138159359952"
+        iyz="-1.44665601201045E-10"
+        izz="0.00233509718517154" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_1"
+    type="continuous">
+    <origin
+      xyz="0.099999 -0.01 0.0375"
+      rpy="-2.3423 0 0" />
+    <parent
+      link="LB_top" />
+    <child
+      link="LB_mid" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="LB_bot">
+    <inertial>
+      <origin
+        xyz="-0.0281332007150992 -0.118676345594585 -1.66533453693773E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914873" />
+      <inertia
+        ixx="0.00251771741245767"
+        ixy="6.38714488107831E-05"
+        ixz="2.30430819882172E-20"
+        iyy="0.000239137877978164"
+        iyz="-3.74727375865302E-18"
+        izz="0.0023350971851706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_bot.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/LB_bot.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_2"
+    type="continuous">
+    <origin
+      xyz="0 -0.2 0"
+      rpy="-1.6314 0 -3.1416" />
+    <parent
+      link="LB_mid" />
+    <child
+      link="LB_bot" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RB_top">
+    <inertial>
+      <origin
+        xyz="0.0434431624243415 1.12757025938492E-17 0.0316409159213933"
+        rpy="0 0 0" />
+      <mass
+        value="0.742809724509618" />
+      <inertia
+        ixx="0.000911568064346272"
+        ixy="-1.44645351404391E-19"
+        ixz="-0.000163030997128549"
+        iyy="0.00159822809215748"
+        iyz="4.91108503406155E-20"
+        izz="0.00194921992793341" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_top.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_top.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_0"
+    type="continuous">
+    <origin
+      xyz="-0.058353 0.20026 0.0068737"
+      rpy="1.5708 0 -3.1416" />
+    <parent
+      link="torso" />
+    <child
+      link="RB_top" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RB_mid">
+    <inertial>
+      <origin
+        xyz="0.011868432325419 -0.118676345594585 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914873" />
+      <inertia
+        ixx="0.00251771741245767"
+        ixy="6.38714488107831E-05"
+        ixz="2.72171227868639E-20"
+        iyy="0.000239137877978165"
+        iyz="-3.9979955110403E-19"
+        izz="0.0023350971851706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_1"
+    type="continuous">
+    <origin
+      xyz="0.099999 0 0.0375"
+      rpy="-0.79932 0 0" />
+    <parent
+      link="RB_top" />
+    <child
+      link="RB_mid" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+  <link
+    name="RB_bot">
+    <inertial>
+      <origin
+        xyz="-0.0281329164733092 -0.118676412936461 -5.79800436550926E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.420530964914874" />
+      <inertia
+        ixx="0.00251771710666669"
+        ixy="6.38769030274317E-05"
+        ixz="3.7636560139059E-10"
+        iyy="0.000239138183768367"
+        iyz="1.31640157874033E-10"
+        izz="0.00233509718517138" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_bot.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://catbot/meshes/RB_bot.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_2"
+    type="continuous">
+    <origin
+      xyz="0 -0.2 0"
+      rpy="1.6314 0 -3.1416" />
+    <parent
+      link="RB_mid" />
+    <child
+      link="RB_bot" />
+    <axis
+      xyz="1 0 0" />
+    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+  </joint>
+</robot>
