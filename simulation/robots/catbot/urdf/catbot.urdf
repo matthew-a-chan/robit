@@ -149,7 +149,7 @@
       link="LF_mid" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="LF_bot">
@@ -203,7 +203,7 @@
       link="LF_bot" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RF_top">
@@ -257,7 +257,7 @@
       link="RF_top" />
     <axis
       xyz="0 0 1" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RF_mid">
@@ -311,7 +311,7 @@
       link="RF_mid" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RF_bot">
@@ -365,7 +365,7 @@
       link="RF_bot" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="LB_top">
@@ -419,7 +419,7 @@
       link="LB_top" />
     <axis
       xyz="0 0 1" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="LB_mid">
@@ -473,7 +473,7 @@
       link="LB_mid" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="LB_bot">
@@ -527,7 +527,7 @@
       link="LB_bot" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RB_top">
@@ -581,7 +581,7 @@
       link="RB_top" />
     <axis
       xyz="0 0 1" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RB_mid">
@@ -635,7 +635,7 @@
       link="RB_mid" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
   <link
     name="RB_bot">
@@ -689,6 +689,6 @@
       link="RB_bot" />
     <axis
       xyz="1 0 0" />
-    <limit effort="1000.0" lower="-2" upper="2" velocity="1000"/>
+    <limit effort="1000.0" lower="-6" upper="6" velocity="1000"/>
   </joint>
 </robot>
