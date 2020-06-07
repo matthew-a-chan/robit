@@ -41,7 +41,7 @@ class Motor:
         torque = k_p * proportional + k_d * derivative
 
         torque = max(min(self.maxTorque*torque, self.maxTorque), -self.maxTorque)
-
+        """
         self._p.setJointMotorControl2(bodyUniqueId=self.botId,
                                       jointIndex=self.motorId,
                                       controlMode=p.TORQUE_CONTROL,
@@ -52,4 +52,3 @@ class Motor:
                                 targetPosition=angle_radians,
                                 controlMode=p.POSITION_CONTROL,
                                 force = self.maxTorque)
-        """
