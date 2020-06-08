@@ -27,7 +27,7 @@ class catbot(Robot):
         self.accelerometer = sensors.Accelerometer(self.parts['torso'], noise_std=0.1, offset_std=0.1)
         self.gyro = sensors.Gyro(self.parts['torso'], noise_std=0.1, offset_std=0.1)
 
-        self.motor_torque = 10
+        self.motor_torque = 20
 
         self.LF_0 = Motor(self.joints['LF_0'], maxTorque=self.motor_torque)
         self.LF_1 = Motor(self.joints['LF_1'], maxTorque=self.motor_torque)
