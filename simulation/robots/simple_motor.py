@@ -50,5 +50,4 @@ class Motor:
         self._p.setJointMotorControl2(bodyUniqueId=self.botId,
                                 jointIndex=self.motorId,
                                 targetPosition=angle_radians,
-                                controlMode=p.POSITION_CONTROL,
-                                force = self.maxTorque)
+                                controlMode=p.POSITION_CONTROL)
