@@ -34,7 +34,7 @@ class Robot:
 		bodies = self._p.loadURDF(self.model_urdf,
 								      basePosition=self.basePosition,
 									  baseOrientation=self.baseOrientation,
-									  useFixedBase=True)
+									  useFixedBase=False)
 
 		if np.isscalar(bodies):
 			bodies = [bodies]

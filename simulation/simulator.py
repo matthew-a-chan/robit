@@ -11,6 +11,7 @@ import time
 import environments
 import robots
 import numpy as np
+from trot_controller import TrotController
 
 
 
@@ -85,6 +86,10 @@ def controller(timestep):
 
     return actions
 
+tc = TrotController()
+def controller(timestep, observation):
+    return tc.get_action(timestep, observation)
+
 
 def main(argv):
     env_id = 'IKEnv-v0'
@@ -95,16 +100,16 @@ def main(argv):
         done = False
         obs = env.reset()
 
-        dead_counter = 0
         timesteps = 0
-        while True:
+        while not done:
             frame_start_time = time.time()
-            action = controller (timesteps)
+            action = controller (timesteps, obs)
 
             obs, rewards, done, info = env.step(action)
             env.render('human')
             delta_time = time.time() - frame_start_time
             if delta_time < 0.01: time.sleep(0.01 - delta_time)
+            #time.sleep(0.01)
             timesteps += 1
 
 
