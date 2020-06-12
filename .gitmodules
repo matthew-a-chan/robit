@@ -1,0 +1,3 @@
+[submodule "simulation/rl_algorithms"]
+	path = simulation/rl_algorithms
+	url = https://github.com/ericryanchan/rl_algorithms.git
