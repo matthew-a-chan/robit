@@ -15,7 +15,7 @@ class catbot(Robot):
 
         self.energy = 0
 
-        self.basePosition = [0, 0, 0.5]
+        self.basePosition = [0, 0, 0.45]
         self.baseOrientation = [0, 0, 0, 1]
 
     def robot_specific_reset(self, bullet_client):

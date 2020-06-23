@@ -1,5 +1,6 @@
 import numpy as np
 import ik
+from rl_algorithms.CMA import torchnet
 
 class LegController:
     def __init__(self, mode='forward'):
@@ -46,14 +47,24 @@ class TrotController:
         self.moving_average_pitch_rate = 0
         self.moving_average_roll = 0
         self.moving_average_pitch = 0
+
+        # PARAMETERS:
+        self.net = torchnet.NeuralNet([6*3, 24, 3])
+
+
+
+
+    def adopt_parameters(self, parameters):
+        self.observations = [0., 0., 0., 0., 0., 0.] * 3
+        self.net.adopt_parameters(parameters)
+
+    def parameter_size(self):
+        return self.net.parameter_size()
+
     def get_positions(self, observation):
-        pitch, roll, yaw, pitch_rate, roll_rate, yaw_rate = observation
-        self.moving_average_roll = 0.05 * roll_rate + 0.95 * self.moving_average_roll
-        self.moving_average_pitch = 0.05 * pitch_rate + 0.95 * self.moving_average_pitch
-        self.moving_average_roll_rate = 0.05 * roll_rate + 0.95 * self.moving_average_roll_rate
-        self.moving_average_pitch_rate = 0.05 * pitch_rate + 0.95 * self.moving_average_pitch_rate
-        self.target_velocity[0] = 0.*self.moving_average_roll_rate - 6. * self.moving_average_roll
-        self.target_velocity[1] = 1.# -3. * self.moving_average_pitch#1. - 4.*self.moving_average_pitch_rate
+        self.observations = self.observations[6:] + list(observation)
+
+        self.target_velocity = self.net.predict(self.observations)[0].numpy() + np.array([0., 1., 0.])
 
         self.lc_FL.target_velocity = self.target_velocity
         self.lc_FR.target_velocity = self.target_velocity
@@ -61,8 +72,8 @@ class TrotController:
         self.lc_BR.target_velocity = self.target_velocity
         return self.lc_FL.get_position(), self.lc_FR.get_position(), self.lc_BL.get_position(), self.lc_BR.get_position()
 
-    def get_action(self, timestep, observation):
-        corrections = np.array ([-0.2, -.85, -1.55, 0.2, +.85, +1.55, 0.2, -.85, -1.55, -0.2, +.85, +1.55])
+    def predict(self, observation):
+        corrections = np.array ([-0.1, -.85, -1.55, 0.1, +.85, +1.55, 0.1, -.85, -1.55, -0.1, +.85, +1.55])
         center = np.array ([0, 0, -200])
         actions = np.zeros (12)
 
@@ -72,7 +83,7 @@ class TrotController:
         actions[6:9] = ik.solve (center + offset_FR, 'Front_Right')
         actions[9:12] = ik.solve (center + offset_FL, 'Front_Left')
 
-        return lerp(corrections, actions + corrections, np.clip(timestep/500, 0.0, 1.0))
+        return corrections + actions, None#lerp(corrections, actions + corrections, np.clip(timestep/500, 0.0, 1.0))
 
 
 

@@ -86,9 +86,14 @@ def controller(timestep):
 
     return actions
 
+import pickle
 tc = TrotController()
+with open('models/cma_IKEnv-v0.pkl', 'rb') as f:
+    solution = pickle.load(f)['solution_mean']
+    print(solution)
+    tc.adopt_parameters(solution)
 def controller(timestep, observation):
-    return tc.get_action(timestep, observation)
+    return tc.predict(observation)[0]
 
 
 def main(argv):
@@ -101,16 +106,19 @@ def main(argv):
         obs = env.reset()
 
         timesteps = 0
+        total_reward = 0
         while not done:
             frame_start_time = time.time()
             action = controller (timesteps, obs)
 
             obs, rewards, done, info = env.step(action)
             env.render('human')
+            total_reward += rewards
             delta_time = time.time() - frame_start_time
             if delta_time < 0.01: time.sleep(0.01 - delta_time)
             #time.sleep(0.01)
             timesteps += 1
+        print(total_reward)
 
 
 if __name__ == '__main__':
