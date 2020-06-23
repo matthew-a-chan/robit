@@ -1,6 +1,6 @@
 import numpy as np
 import ik
-from rl_algorithms.CMA import torchnet
+#from rl_algorithms.CMA import torchnet
 
 class LegController:
     def __init__(self, mode='forward'):
@@ -49,13 +49,12 @@ class TrotController:
         self.moving_average_pitch = 0
 
         # PARAMETERS:
-        self.net = torchnet.NeuralNet([6*3, 24, 3])
-
+        #self.net = torchnet.NeuralNet([6*3, 24, 3])
+        self.observations = [0., 0., 0., 0., 0., 0.] * 3
 
 
 
     def adopt_parameters(self, parameters):
-        self.observations = [0., 0., 0., 0., 0., 0.] * 3
         self.net.adopt_parameters(parameters)
 
     def parameter_size(self):
@@ -64,7 +63,9 @@ class TrotController:
     def get_positions(self, observation):
         self.observations = self.observations[6:] + list(observation)
 
-        self.target_velocity = self.net.predict(self.observations)[0].numpy() + np.array([0., 1., 0.])
+        #self.target_velocity = self.net.predict(self.observations)[0].numpy() + np.array([0., 1., 0.])
+        self.target_velocity = np.array([0, 1.0, 0])
+
 
         self.lc_FL.target_velocity = self.target_velocity
         self.lc_FR.target_velocity = self.target_velocity

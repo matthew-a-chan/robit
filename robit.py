@@ -1,13 +1,12 @@
 import odrive
 import time
 import math
-import tinyik
-
+import ik
 
 
 class Robit ():
 
-    def __init__ (self, controllers):
+    def __init__ (self, controllers, enable_diagonistic=False):
         self.devices = dict()
         self.motor_table = dict()
         for serial, label1, label2 in controllers:
@@ -19,13 +18,11 @@ class Robit ():
             self.motor_table[label1] = (serial, 0)
             self.motor_table[label2] = (serial, 1)
         
-        self.legs = dict()
+        self.enable_diagonistic = enable_diagonistic
 
-        self.legs['Front_Left'] =  tinyik.Actuator(['x', [0., -20., .0], 'y', [0., 0., -116.], 'y', [0., 10., -116.]])
-        self.legs['Front_Right'] = tinyik.Actuator(['x', [0., 20., .0], 'y', [0., 0., -116.], 'y', [0., -10., -116.]])
-        self.legs['Back_Left'] =   tinyik.Actuator(['x', [0., -20., .0], 'y', [0., 0., -116.], 'y', [0., 10., -116.]])
-        self.legs['Back_Right'] =  tinyik.Actuator(['x', [0., 20., .0], 'y', [0., 0., -116.], 'y', [0., -10., -116.]])
-
+    def debug (self, *args):
+        if self.enable_diagonistic:
+            print (args)
 
     def set_state (self, label, state):
         motor = self.get_motor (label)
@@ -35,6 +32,9 @@ class Robit ():
             motor.requested_state = 8 # Controlled
         if state == 'CALIBRATE':
             motor.requested_state = 3 # CALIBRATION
+
+    def calibrate (self):
+        pass
     
     def snap (self, labels, positions):
         SCALE = 9*7200/6.14159 # ~10551.1
@@ -59,6 +59,9 @@ class Robit ():
 
     
     def get_motor (self, label):
+        if not label in self.motor_table:
+            self.debug ('Invalid motor! requested label: ', label)
+            return None
         # If need be, we may easily optimize this.
         serial, axis = self.motor_table[label]
         device = self.devices[serial]
@@ -67,20 +70,21 @@ class Robit ():
         else:
             return device.axis1
     
+
     def place (self, positions):
         print ("This is a really _really_ _REALLY_ bad idea to run this function right now.")
         return
         if 'Front_Left' in positions:
-            self.legs['Front_Left'].ee = positions['Front_Left']
-            self.snap (['FL_1', 'FL_2', 'FL_3'], self.legs['Front_Left'].angles)
+            angles = ik.solve (positions['Front_Left'], 'Front_Left')
+            self.snap (['FL_1', 'FL_2', 'FL_3'], angles)
         if 'Front_Right' in positions:
-            self.legs['Front_Right'].ee = positions['Front_Right']
+            angles = ik.solve (positions['Front_Right'], 'Front_Right')
             self.snap (['FR_1', 'FR_2', 'FR_3'], self.legs['Front_Right'].angles)
         if 'Back_Left' in positions:
-            self.legs['Back_Left'].ee = positions['Back_Left']
+            angles = ik.solve (positions['Back_Left'], 'Back_Left')
             self.snap (['BL_1', 'BL_2', 'BL_3'], self.legs['Back_Left'].angles)
         if 'Back_Right' in positions:
-            self.legs['Back_Right'].ee = positions['Back_Right']
+            angles = ik.solve (positions['Back_Right'], 'Back_Right')
             self.snap (['BR_1', 'BR_2', 'BR_3'], self.legs['Back_Right'].angles)
         
 
@@ -89,25 +93,41 @@ class Robit ():
 
 
 
+    def autoconfig (self):
+        for label in self.motor_table ():
+
+            motor = self.get_motor (label)
+
+            motor.motor.config.current_lim = 20
+            motor.controller.config.vel_limit = 25000
+            motor.motor.config.calibration_current = 5
+            motor.motor.config.pole_pairs = 12
+            motor.motor.config.motor_type = 0
+            motor.encoder.config.cpr = 8192
+
+            motor.controller.config.control_mode = 3
+            motor.controller.config.pos_gain = 50
+            motor.controller.config.vel_gain = 6 / 100000
+            motor.controller.config.vel_integrator_gain = 0
+            motor.controller.config.vel_limit_tolerance = 1.2
+            motor.controller.config.vel_ramp_rate = 10000
 
 
+    def reboot (self):
+        for device in self.devices.values ():
+            try:
+                device.save_configuration()
+                device.reboot()
+            except e:
+                debug (e)
 
 
+    def dump_faults (self):
+        for serial in self.devices ():
+            print (serial)
+            dump_errors (R.devices[serial], True)
 
         
-    def test_sin (self, labels, revolutions, amplitude):
-        #self.set_state (labels, 'CONTROL')
-        iterations = 1000
-        for i in range (iterations):
-            self.snap (labels, [math.sin(revolutions * 6.282 * i / iterations) * amplitude] * len(labels))
-            time.sleep (5.0 / iterations)
-        #self.set_state (label, 'IDLE')
-
-        
-
-
-
-
 
 
 

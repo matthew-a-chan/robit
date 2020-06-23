@@ -40,30 +40,32 @@ def gait_scheduler (timestep):
 
 
 
-def controller(timestep):
+def controller(timestep, _):
 
     corrections = np.array ([0, -.85, -1.55, 0, +.85, +1.55, 0, -.85, -1.55, 0, +.85, +1.55])
 
     center = np.array ([0, 0, -200])
+    offset = np.array ([0, 0, 0])
 
     actions = np.zeros (12)
 
     speed = 80
 
     if True:
-        offset = gait_scheduler (timestep * speed)
+        #offset = gait_scheduler (timestep * speed)
         actions[9:12] = ik.solve (center + offset, 'Front_Left')
 
-        offset = gait_scheduler (timestep * speed + 3000)
-        offset [0] = - offset[0]
+        #offset = gait_scheduler (timestep * speed + 3000)
         actions[6:9] = ik.solve (center + offset, 'Front_Right')
 
-        offset = gait_scheduler (timestep * speed + 2000)
+        #offset = gait_scheduler (timestep * speed + 2000)
         actions[3:6] = ik.solve (center + offset, 'Back_Left')
 
-        offset = gait_scheduler (timestep * speed + 5000)
-        offset [0] = - offset[0]
+        #offset = gait_scheduler (timestep * speed + 5000)
         actions[0:3] = ik.solve (center + offset, 'Back_Right')
+
+        #thing = actions.reshape ((4, 3))
+        #print (thing)
 
     else:
         offset = gait_scheduler (timestep * speed)
@@ -88,12 +90,14 @@ def controller(timestep):
 
 import pickle
 tc = TrotController()
+"""
 with open('models/cma_IKEnv-v0.pkl', 'rb') as f:
     solution = pickle.load(f)['solution_mean']
     print(solution)
     tc.adopt_parameters(solution)
-def controller(timestep, observation):
-    return tc.predict(observation)[0]
+"""
+#def controller(timestep, observation):
+#    return tc.predict(observation)[0]
 
 
 def main(argv):
