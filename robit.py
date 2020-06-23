@@ -74,6 +74,8 @@ class Robit ():
     def place (self, positions):
         print ("This is a really _really_ _REALLY_ bad idea to run this function right now.")
         return
+
+        # Remember, ik.solve returns [ Hip Abductor, Hip Angle, Knee Angle ]
         if 'Front_Left' in positions:
             angles = ik.solve (positions['Front_Left'], 'Front_Left')
             self.snap (['FL_1', 'FL_2', 'FL_3'], angles)
@@ -94,17 +96,26 @@ class Robit ():
 
 
     def autoconfig (self):
-        for label in self.motor_table ():
+
+        for serial in self.devices:
+            
+            device = self.devices[serial]
+
+            device.config.brake_resistance = 0.1
+
+
+        for label in self.motor_table:
 
             motor = self.get_motor (label)
 
             motor.motor.config.current_lim = 20
-            motor.controller.config.vel_limit = 25000
             motor.motor.config.calibration_current = 5
             motor.motor.config.pole_pairs = 12
             motor.motor.config.motor_type = 0
+
             motor.encoder.config.cpr = 8192
 
+            motor.controller.config.vel_limit = 100000
             motor.controller.config.control_mode = 3
             motor.controller.config.pos_gain = 50
             motor.controller.config.vel_gain = 6 / 100000
@@ -118,14 +129,14 @@ class Robit ():
             try:
                 device.save_configuration()
                 device.reboot()
-            except e:
-                debug (e)
+            except Exception as e:
+                self.debug (e)
 
 
-    def dump_faults (self):
-        for serial in self.devices ():
+    def dump_faults (self, clear=True):
+        for serial in self.devices:
             print (serial)
-            dump_errors (R.devices[serial], True)
+            odrive.utils.dump_errors (self.devices[serial], clear)
 
         
 

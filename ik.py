@@ -60,14 +60,14 @@ def solve (point, leg):
 
     second_angle = math.atan2 (length_xz_leg, length_xz_hip)
 
-    hip_deflection = second_angle + absolute_angle
+    hip_abductor = second_angle + absolute_angle
 
 
 
 
 
     # Compute hip/knee joints
-    hip_position = math.cos (hip_deflection) * length_xz_hip, hip[1], math.sin (hip_deflection) * length_xz_hip
+    hip_position = math.cos (hip_abductor) * length_xz_hip, hip[1], math.sin (hip_abductor) * length_xz_hip
     
     height = ((x - hip_position[0]) ** 2 + (y - hip_position[1]) ** 2 + (z - hip_position[2]) ** 2) ** (1/2)
 
@@ -84,10 +84,10 @@ def solve (point, leg):
 
     if 'Right' in leg:
         hip_angle = - hip_angle
-        hip_deflection = - hip_deflection
+        hip_abductor = - hip_abductor
     
     if 'Back' in leg:
-        hip_deflection = - hip_deflection
+        hip_abductor = - hip_abductor
 
 
     
@@ -95,5 +95,5 @@ def solve (point, leg):
 
 
 
-    return hip_deflection, hip_angle, knee_angle
+    return hip_abductor, hip_angle, knee_angle
         
