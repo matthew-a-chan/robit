@@ -19,22 +19,13 @@ class Motor:
 
     self.maxTorque = maxTorque
 
-    self._p.setJointMotorControl2(
-        bodyUniqueId=self.botId,
-        jointIndex=self.motorId,
-        controlMode=p.VELOCITY_CONTROL,
-        force=0.5)
+    self._p.setJointMotorControl2(bodyUniqueId=self.botId, jointIndex=self.motorId, controlMode=p.VELOCITY_CONTROL, force=0.5)
 
   def setMotorVelocity(self, counts_per_sec):
     raise NotImplementedError
     #speed = clamp(speed, -1,1)*self.maxSpeed
     #p.setJointMotorControl2(self.botId, self.motorId, p.VELOCITY_CONTROL, force=0.5)
-    self._p.setJointMotorControl2(
-        bodyUniqueId=self.botId,
-        jointIndex=self.motorId,
-        targetVelocity=counts_per_sec,
-        controlMode=p.VELOCITY_CONTROL,
-        force=self.maxTorque)
+    self._p.setJointMotorControl2(bodyUniqueId=self.botId, jointIndex=self.motorId, targetVelocity=counts_per_sec, controlMode=p.VELOCITY_CONTROL, force=self.maxTorque)
 
   def setMotorPosition(self, angle_radians):
     proportional = angle_radians - self.joint.get_position()
@@ -51,9 +42,4 @@ class Motor:
                                       controlMode=p.TORQUE_CONTROL,
                                       force=torque)
         """
-    self._p.setJointMotorControl2(
-        bodyUniqueId=self.botId,
-        jointIndex=self.motorId,
-        targetPosition=angle_radians,
-        controlMode=p.POSITION_CONTROL,
-        force=self.maxTorque)
+    self._p.setJointMotorControl2(bodyUniqueId=self.botId, jointIndex=self.motorId, targetPosition=angle_radians, controlMode=p.POSITION_CONTROL, force=self.maxTorque)

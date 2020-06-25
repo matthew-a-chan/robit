@@ -18,12 +18,10 @@ class LegController:
     self.reverse_point = -self.forward_point
 
     if self.mode == 'forward':
-      target_position = lerp(self.reverse_point, self.forward_point,
-                             self.timestep / self.forward_cycle_length)
+      target_position = lerp(self.reverse_point, self.forward_point, self.timestep / self.forward_cycle_length)
       target_position[2] += np.sin((self.timestep / self.forward_cycle_length) * 3.14159) * 70
     elif self.mode == 'reverse':
-      target_position = lerp(self.forward_point, self.reverse_point,
-                             self.timestep / self.reverse_cycle_length)
+      target_position = lerp(self.forward_point, self.reverse_point, self.timestep / self.reverse_cycle_length)
 
     self.timestep += 1
     if self.mode == 'forward' and self.timestep >= self.forward_cycle_length:
@@ -70,12 +68,10 @@ class TrotController:
     self.lc_FR.target_velocity = self.target_velocity
     self.lc_BL.target_velocity = self.target_velocity
     self.lc_BR.target_velocity = self.target_velocity
-    return self.lc_FL.get_position(), self.lc_FR.get_position(), self.lc_BL.get_position(
-    ), self.lc_BR.get_position()
+    return self.lc_FL.get_position(), self.lc_FR.get_position(), self.lc_BL.get_position(), self.lc_BR.get_position()
 
   def predict(self, observation):
-    corrections = np.array(
-        [-0.1, -.85, -1.55, 0.1, +.85, +1.55, 0.1, -.85, -1.55, -0.1, +.85, +1.55])
+    corrections = np.array([-0.1, -.85, -1.55, 0.1, +.85, +1.55, 0.1, -.85, -1.55, -0.1, +.85, +1.55])
     center = np.array([0, 0, -200])
     actions = np.zeros(12)
 

@@ -91,11 +91,7 @@ class catbot(Robot):
     torsoPosition = self.parts['torso'].get_position()
     torsoOrn = self.accelerometer.query()
 
-    if (torsoPosition[2] < 0.2 or max(abs(n) for n in torsoOrn) > 0.15 * math.pi or
-        self.parts['LF_bot'].get_position()[2] < 0.02 or
-        self.parts['RF_bot'].get_position()[2] < 0.02 or
-        self.parts['LB_bot'].get_position()[2] < 0.02 or
-        self.parts['RB_bot'].get_position()[2] < 0.02):
+    if (torsoPosition[2] < 0.2 or max(abs(n) for n in torsoOrn) > 0.15 * math.pi or self.parts['LF_bot'].get_position()[2] < 0.02 or self.parts['RF_bot'].get_position()[2] < 0.02 or self.parts['LB_bot'].get_position()[2] < 0.02 or self.parts['RB_bot'].get_position()[2] < 0.02):
       return True
 
     return False

@@ -24,10 +24,7 @@ class Accelerometer(Sensor):
 
   def query(self):
     eulerOrientation = self.bodyPart.get_euler_orientation()
-    return [
-        axisOrientation + self.offset + self.noise_std * np.random.randn()
-        for axisOrientation in eulerOrientation
-    ]
+    return [axisOrientation + self.offset + self.noise_std * np.random.randn() for axisOrientation in eulerOrientation]
 
 
 class Encoder(Sensor):
@@ -53,12 +50,6 @@ class Gyro(Sensor):
   def query(self):
     linearVelocity, angularVelocity = self.bodyPart.get_velocity()
 
-    linearVelocity = [
-        axisOrientation + self.offset + self.noise_std * np.random.randn()
-        for axisOrientation in linearVelocity
-    ]
-    angularVelocity = [
-        axisOrientation + self.offset + self.noise_std * np.random.randn()
-        for axisOrientation in angularVelocity
-    ]
+    linearVelocity = [axisOrientation + self.offset + self.noise_std * np.random.randn() for axisOrientation in linearVelocity]
+    angularVelocity = [axisOrientation + self.offset + self.noise_std * np.random.randn() for axisOrientation in angularVelocity]
     return linearVelocity, angularVelocity

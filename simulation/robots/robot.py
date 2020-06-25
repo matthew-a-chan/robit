@@ -33,11 +33,7 @@ class Robot:
     self.loaded = False
 
   def load(self):
-    bodies = self._p.loadURDF(
-        self.model_urdf,
-        basePosition=self.basePosition,
-        baseOrientation=self.baseOrientation,
-        useFixedBase=True)
+    bodies = self._p.loadURDF(self.model_urdf, basePosition=self.basePosition, baseOrientation=self.baseOrientation, useFixedBase=True)
 
     if np.isscalar(bodies):
       bodies = [bodies]
@@ -120,10 +116,7 @@ class BodyPart:
     self.initialPosition = self.get_position()
     self.initialOrientation = self.get_orientation()
 
-  def state_fields_of_pose_of(
-      self,
-      body_id,
-      link_id=-1):  # a method you will most probably need a lot to get pose and orientation
+  def state_fields_of_pose_of(self, body_id, link_id=-1):  # a method you will most probably need a lot to get pose and orientation
     if link_id == -1:
       (x, y, z), (a, b, c, d) = self._p.getBasePositionAndOrientation(body_id)
     else:
@@ -137,8 +130,7 @@ class BodyPart:
     if self.partID == -1:
       (vx, vy, vz), (wx, wy, wz) = self._p.getBaseVelocity(self.bodyID)
     else:
-      (x, y, z), (a, b, c, d), _, _, _, _, (vx, vy, vz), (wx, wy, wz) = self._p.getLinkState(
-          self.bodyID, self.partID, computeLinkVelocity=1)
+      (x, y, z), (a, b, c, d), _, _, _, _, (vx, vy, vz), (wx, wy, wz) = self._p.getLinkState(self.bodyID, self.partID, computeLinkVelocity=1)
     return np.array([vx, vy, vz]), np.array(wx, wy, wz)
 
   def get_linear_velocity(self):
@@ -227,31 +219,17 @@ class Joint:
     return vx
 
   def set_position(self, position):
-    self._p.setJointMotorControl2(
-        self.bodyID, self.jointID, pybullet.POSITION_CONTROL, targetPosition=position)
+    self._p.setJointMotorControl2(self.bodyID, self.jointID, pybullet.POSITION_CONTROL, targetPosition=position)
 
   def set_velocity(self, velocity):
-    self._p.setJointMotorControl2(
-        self.bodyID, self.jointID, pybullet.VELOCITY_CONTROL, targetVelocity=velocity)
+    self._p.setJointMotorControl2(self.bodyID, self.jointID, pybullet.VELOCITY_CONTROL, targetVelocity=velocity)
 
   def set_torque(self, torque):
-    self._p.setJointMotorControl2(
-        bodyIndex=self.bodyID,
-        jointIndex=self.jointID,
-        controlMode=pybullet.TORQUE_CONTROL,
-        force=torque)  # positionGain=0.1, velocityGain=0.1)
+    self._p.setJointMotorControl2(bodyIndex=self.bodyID, jointIndex=self.jointID, controlMode=pybullet.TORQUE_CONTROL, force=torque)  # positionGain=0.1, velocityGain=0.1)
 
   def reset_position(self, position, velocity=0):
-    self._p.resetJointState(
-        self.bodyID, self.jointID, targetValue=position, targetVelocity=velocity)
+    self._p.resetJointState(self.bodyID, self.jointID, targetValue=position, targetVelocity=velocity)
     self.disable_motor()
 
   def disable_motor(self):
-    self._p.setJointMotorControl2(
-        self.bodyID,
-        self.jointID,
-        controlMode=pybullet.VELOCITY_CONTROL,
-        targetVelocity=0,
-        positionGain=0.1,
-        velocityGain=0.1,
-        force=0.1)
+    self._p.setJointMotorControl2(self.bodyID, self.jointID, controlMode=pybullet.VELOCITY_CONTROL, targetVelocity=0, positionGain=0.1, velocityGain=0.1, force=0.1)

@@ -68,21 +68,9 @@ class BaseBulletEnv(gym.Env):
       if hasattr(self.robot, 'body_xyz'):
         base_pos = self.robot.body_xyz
 
-    view_matrix = self._p.computeViewMatrixFromYawPitchRoll(
-        cameraTargetPosition=base_pos,
-        distance=self._cam_dist,
-        yaw=self._cam_yaw,
-        pitch=self._cam_pitch,
-        roll=0,
-        upAxisIndex=2)
-    proj_matrix = self._p.computeProjectionMatrixFOV(
-        fov=60, aspect=float(self._render_width) / self._render_height, nearVal=0.1, farVal=100.0)
-    (_, _, px, _, _) = self._p.getCameraImage(
-        width=self._render_width,
-        height=self._render_height,
-        viewMatrix=view_matrix,
-        projectionMatrix=proj_matrix,
-        renderer=pybullet.ER_BULLET_HARDWARE_OPENGL)
+    view_matrix = self._p.computeViewMatrixFromYawPitchRoll(cameraTargetPosition=base_pos, distance=self._cam_dist, yaw=self._cam_yaw, pitch=self._cam_pitch, roll=0, upAxisIndex=2)
+    proj_matrix = self._p.computeProjectionMatrixFOV(fov=60, aspect=float(self._render_width) / self._render_height, nearVal=0.1, farVal=100.0)
+    (_, _, px, _, _) = self._p.getCameraImage(width=self._render_width, height=self._render_height, viewMatrix=view_matrix, projectionMatrix=proj_matrix, renderer=pybullet.ER_BULLET_HARDWARE_OPENGL)
     rgb_array = np.array(px)
     rgb_array = rgb_array[:, :, :3]
     return rgb_array

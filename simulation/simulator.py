@@ -24,18 +24,9 @@ def gait_scheduler(timestep):
   swing_time = 2400
 
   stops = [0, 100, 150, swing_time, swing_time + 50, swing_time + 100, 6000]
-  locations = np.array([[stride_width, -stride_length / 2, 0],
-                        [stride_width, -stride_length / 2, stride_height],
-                        [stride_width, -stride_length / 2, stride_height],
-                        [stride_width, stride_length / 2 + stride_height, stride_height],
-                        [stride_width, stride_length / 2 + stride_height, stride_height],
-                        [stride_width, stride_length / 2, 0],
-                        [stride_width, -stride_length / 2, 0]])
+  locations = np.array([[stride_width, -stride_length / 2, 0], [stride_width, -stride_length / 2, stride_height], [stride_width, -stride_length / 2, stride_height], [stride_width, stride_length / 2 + stride_height, stride_height], [stride_width, stride_length / 2 + stride_height, stride_height], [stride_width, stride_length / 2, 0], [stride_width, -stride_length / 2, 0]])
 
-  x, y, z = np.interp(
-      timestep, stops, locations[:, 0], period=max_timestep), np.interp(
-          timestep, stops, locations[:, 1], period=max_timestep), np.interp(
-              timestep, stops, locations[:, 2], period=max_timestep)
+  x, y, z = np.interp(timestep, stops, locations[:, 0], period=max_timestep), np.interp(timestep, stops, locations[:, 1], period=max_timestep), np.interp(timestep, stops, locations[:, 2], period=max_timestep)
   return [x, y, z]
 
 

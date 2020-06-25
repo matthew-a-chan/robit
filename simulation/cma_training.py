@@ -25,8 +25,7 @@ def main(argv):
     cmaes = CMAEvolution.load(save_path)
     cmaes.set_env(env)
   else:
-    policy = TrotController(
-    )  #NeuralNet([env.observation_space.shape[0], 64, 64, env.action_space.shape[0]])
+    policy = TrotController()  #NeuralNet([env.observation_space.shape[0], 64, 64, env.action_space.shape[0]])
     cmaes = CMAEvolution(policy=policy, env=env, checkpoint_path=save_path, population_size=64)
 
   cmaes.evolve(verbose=True, processes=4)
