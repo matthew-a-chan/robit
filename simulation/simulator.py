@@ -1,3 +1,4 @@
+#! /Users/matthewchan/Desktop/catbot3000/environment/bin/python3
 
 import sys
 sys.path.append ('..')
@@ -52,16 +53,16 @@ def controller(timestep, _):
     speed = 80
 
     if True:
-        #offset = gait_scheduler (timestep * speed)
+        offset = gait_scheduler (timestep * speed)
         actions[9:12] = ik.solve (center + offset, 'Front_Left')
 
-        #offset = gait_scheduler (timestep * speed + 3000)
+        offset = gait_scheduler (timestep * speed + 3000)
         actions[6:9] = ik.solve (center + offset, 'Front_Right')
 
-        #offset = gait_scheduler (timestep * speed + 2000)
+        offset = gait_scheduler (timestep * speed + 2000)
         actions[3:6] = ik.solve (center + offset, 'Back_Left')
 
-        #offset = gait_scheduler (timestep * speed + 5000)
+        offset = gait_scheduler (timestep * speed + 5000)
         actions[0:3] = ik.solve (center + offset, 'Back_Right')
 
         #thing = actions.reshape ((4, 3))
@@ -96,8 +97,8 @@ with open('models/cma_IKEnv-v0.pkl', 'rb') as f:
     print(solution)
     tc.adopt_parameters(solution)
 """
-#def controller(timestep, observation):
-#    return tc.predict(observation)[0]
+def controller(timestep, observation):
+    return tc.predict(observation)[0]
 
 
 def main(argv):

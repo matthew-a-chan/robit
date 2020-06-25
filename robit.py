@@ -127,10 +127,11 @@ class Robit ():
     def reboot (self):
         for device in self.devices.values ():
             try:
+                print ('SAVING DEVICE:', device)
                 device.save_configuration()
                 device.reboot()
             except Exception as e:
-                self.debug (e)
+                self.debug (str(e))
 
 
     def dump_faults (self, clear=True):
