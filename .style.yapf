@@ -3,3 +3,4 @@ based_on_style = yapf
 
 spaces_around_power_operator = True
 column_limit = 1000
+indent_width = 4
