@@ -70,10 +70,6 @@ def solve(point, leg):
 
   if 'Right' in leg:
     knee_angle = -knee_angle
-  else:
-    knee_angle = knee_angle
-
-  if 'Right' in leg:
     hip_angle = -hip_angle
     hip_abductor = -hip_abductor
 
