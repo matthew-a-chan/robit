@@ -4,6 +4,13 @@ import math
 import ik
 
 
+def detect(self, count):
+    while count > 0:
+        device = odrive.find_any()
+        print(device)
+        count -= 1
+
+
 class Robit():
 
     def __init__(self, controllers, enable_diagonistic=False):
@@ -33,7 +40,12 @@ class Robit():
         if state == 'CALIBRATE':
             motor.requested_state = 3  # CALIBRATION
 
+    def set_states(self, lablels, states):
+        for label, state in zip(labels, states):
+            self.set_state(label, state)
+
     def calibrate(self):
+        # Establish limits from resistance and position
         pass
 
     def snap(self, labels, positions):
@@ -93,7 +105,7 @@ class Robit():
 
             device = self.devices[serial]
 
-            device.config.brake_resistance = 0.1
+            device.config.brake_resistance = 0.0
 
         for label in self.motor_table:
 

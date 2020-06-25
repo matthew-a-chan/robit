@@ -29,6 +29,8 @@ def main():
     with open('.git/hooks/pre-commit', 'w') as pre_commit_file:
         pre_commit_file.write(pre_commit)
 
+    subprocess.run(['chmod', '744', '.git/hooks/pre-commit'])
+
 
 if __name__ == '__main__':
     main()
