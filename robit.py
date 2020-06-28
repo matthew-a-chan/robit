@@ -4,31 +4,41 @@ import math
 import ik
 
 
-def detect(self, count):
+def detect(count):
     while count > 0:
         device = odrive.find_any()
+        print('Found device!')
         print(device)
         count -= 1
 
 
 class Robit():
 
-    def __init__(self, controllers, enable_diagonistic=False):
+    def __init__(self, enable_diagnostic=False):
         self.devices = dict()
         self.motor_table = dict()
-        for serial, label1, label2 in controllers:
-            print(f"looking for device {serial}")
-            device = odrive.find_any(serial_number=serial)
-            print("found device")
 
-            self.devices[serial] = device
-            self.motor_table[label1] = (serial, 0)
-            self.motor_table[label2] = (serial, 1)
+        self.enable_diagnostic = enable_diagnostic
 
-        self.enable_diagonistic = enable_diagonistic
+    def add_controller(self, controller):
+        serial, label1, label2 = controller
+
+        if serial in self.devices:
+            print("This controller already exists! please delete it first.")
+
+        print(f"looking for device {serial}")
+        device = odrive.find_any(serial_number=serial)
+        print("found device")
+
+        self.devices[serial] = device
+        self.motor_table[label1] = (serial, 0)
+        self.motor_table[label2] = (serial, 1)
+
+    def delete_controller(self, serial):
+        self.devices.pop(serial)
 
     def debug(self, *args):
-        if self.enable_diagonistic:
+        if self.enable_diagnostic:
             print(args)
 
     def set_state(self, label, state):
@@ -40,7 +50,7 @@ class Robit():
         if state == 'CALIBRATE':
             motor.requested_state = 3  # CALIBRATION
 
-    def set_states(self, lablels, states):
+    def set_states(self, labels, states):
         for label, state in zip(labels, states):
             self.set_state(label, state)
 
@@ -55,19 +65,27 @@ class Robit():
 
     def snap_units(self, label, position):
         motor = self.get_motor(label)
-        motor.controller.pos_setpoint = position
+        #        motor.controller.pos_setpoint = position
+        motor.controller.move_to_pos(int(position))
 
     def measure_resistance(self, label):
         motor = self.get_motor(label)
-        return motor.motor.current_meas_phB
+        return round(motor.motor.current_control.Iq_measured, 4)
 
-    def reset(self, labels, positions):
+    def measure_resistances(self, labels):
+        resistances = dict()
+        for label in labels:
+            resistances[label] = self.measure_resistance(label)
+        return resistances
+
+    def reset(self, labels, positions, set_states=False):
         for label, position in zip(labels, positions):
             self.set_state(label, 'IDLE')
             motor = self.get_motor(label)
             motor.encoder.set_linear_count(position)
             self.snap_units(label, position)
-            self.set_state(label, 'CONTROL')
+            if set_states:
+                self.set_state(label, 'CONTROL')
 
     def get_motor(self, label):
         if not label in self.motor_table:
@@ -82,30 +100,22 @@ class Robit():
             return device.axis1
 
     def place(self, positions):
-        print("This is a really _really_ _REALLY_ bad idea to run this function right now.")
-        return
 
-        # Remember, ik.solve returns [ Hip Abductor, Hip Angle, Knee Angle ]
+        # Remember, ik.solve returns [ Hip, Upper Leg, Lower Leg ]
         if 'Front_Left' in positions:
             angles = ik.solve(positions['Front_Left'], 'Front_Left')
-            self.snap(['FL_1', 'FL_2', 'FL_3'], angles)
+            self.snap(['Front_Left_Hip', 'Front_Left_Upper', 'Front_Left_Lower'], angles)
         if 'Front_Right' in positions:
             angles = ik.solve(positions['Front_Right'], 'Front_Right')
-            self.snap(['FR_1', 'FR_2', 'FR_3'], self.legs['Front_Right'].angles)
+            self.snap(['Front_Right_Hip', 'Front_Right_Upper', 'Front_Right_Lower'], angles)
         if 'Back_Left' in positions:
             angles = ik.solve(positions['Back_Left'], 'Back_Left')
-            self.snap(['BL_1', 'BL_2', 'BL_3'], self.legs['Back_Left'].angles)
+            self.snap(['Back_Left_Hip', 'Back_Left_Upper', 'Back_Left_Lower'], angles)
         if 'Back_Right' in positions:
             angles = ik.solve(positions['Back_Right'], 'Back_Right')
-            self.snap(['BR_1', 'BR_2', 'BR_3'], self.legs['Back_Right'].angles)
+            self.snap(['Back_Right_Hip', 'Back_Right_Upper', 'Back_Right_Lower'], angles)
 
     def autoconfig(self):
-
-        for serial in self.devices:
-
-            device = self.devices[serial]
-
-            device.config.brake_resistance = 0.0
 
         for label in self.motor_table:
 
@@ -120,16 +130,29 @@ class Robit():
 
             motor.controller.config.vel_limit = 100000
             motor.controller.config.control_mode = 3
-            motor.controller.config.pos_gain = 50
+            motor.controller.config.pos_gain = 80
             motor.controller.config.vel_gain = 6 / 100000
             motor.controller.config.vel_integrator_gain = 0
             motor.controller.config.vel_limit_tolerance = 1.2
             motor.controller.config.vel_ramp_rate = 10000
 
+            motor.trap_traj.config.vel_limit = 100000
+            motor.trap_traj.config.accel_limit = 500000
+            motor.trap_traj.config.decel_limit = 500000
+
+        for serial in self.devices:
+
+            device = self.devices[serial]
+
+            device.config.brake_resistance = 0.0
+
+            device.save_configuration()
+
     def reboot(self):
-        for device in self.devices.values():
+        for serial in self.devices:
             try:
-                print('SAVING DEVICE:', device)
+                serial = self.devices[serial]
+                print('SAVING DEVICE', serial)
                 device.save_configuration()
                 device.reboot()
             except Exception as e:

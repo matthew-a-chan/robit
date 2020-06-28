@@ -63,7 +63,7 @@ def solve(point, leg):
 
     height = ((x - hip_position[0]) ** 2 + (y - hip_position[1]) ** 2 + (z - hip_position[2]) ** 2) ** (1 / 2)
 
-    cos_arg = np.clip((height ** 2 - length_upper_leg ** 2 - length_lower_leg ** 2) / (2 * length_upper_leg * length_lower_leg), -.9999999999, .9999999999)
+    cos_arg = np.clip((height ** 2 - length_upper_leg ** 2 - length_lower_leg ** 2) / (2 * length_upper_leg * length_lower_leg), -.9999999, .9999999)
     knee_angle = math.acos(cos_arg)
 
     hip_angle = math.atan2(hip_position[1] - y, height) + math.atan2(length_lower_leg * math.sin(knee_angle), length_upper_leg + length_lower_leg * math.cos(knee_angle))
